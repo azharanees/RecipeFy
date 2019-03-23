@@ -1,0 +1,79 @@
+package com.example.azhar.recipefy;
+
+import java.math.BigDecimal;
+
+/**
+ * Created by Azhar on 3/23/2019.
+ */
+
+public class Product {
+   private int id;
+    private BigDecimal price;
+    private double weight;
+    private String description;
+    private String name;
+    private String imgLoc;
+
+    public Product() {
+    }
+
+    public Product(BigDecimal price, double weight, String description, String name) {
+        this.price = price;
+        this.weight = weight;
+        this.description = description;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "ID : "+getId()+"\nName : "+ getName() +"\nPrice : " + getPrice() + "\nWeight : "+ getWeight() + "\nDescription : "+ getDescription();
+    }
+
+    public String getImgLoc() {
+        return imgLoc;
+    }
+
+    public void setImgLoc(String imgLoc) {
+        this.imgLoc = imgLoc;
+    }
+}

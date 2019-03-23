@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RecipeFy</string>
+    <string name="add_product">Add Product</string>
+    <string name="register_product">Register Product</string>
+</resources>
