@@ -1,16 +1,22 @@
 package com.example.azhar.recipefy;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -21,138 +27,46 @@ import java.util.Map;
  * Created by Azhar on 3/23/2019.
  */
 
-public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
+public class CustomExpandableListAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private List<String> expandableListTitle;
     private Map<String, List<String>> expandableListDetail;
 
-    public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       Map<String, List<String>> expandableListDetail) {
+    public CustomExpandableListAdapter(Context context, List<String> list) {
+        super(context,-1,list);
         this.context = context;
-        this.expandableListTitle = expandableListTitle;
-        this.expandableListDetail = expandableListDetail;
+        this.expandableListTitle = list;
 
     }
 
     @Override
-    public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
-    }
-
-    @Override
-    public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
-    }
-
-    @Override
-    public View getChildView(int listPosition, final int expandedListPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item, null);
-        }
-        TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.expandedListItem);
-        expandedListTextView.setText(expandedListText);
-        return convertView;
-    }
-
-    @Override
-    public int getChildrenCount(int listPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .size();
-    }
-
-    @Override
-    public Object getGroup(int listPosition) {
-        return this.expandableListTitle.get(listPosition);
-    }
-
-    @Override
-    public int getGroupCount() {
-        return this.expandableListTitle.size();
-    }
-
-    @Override
-    public long getGroupId(int listPosition) {
-        return listPosition;
-    }
-    CheckBox check;
-
-    @Override
-    public View getGroupView(int listPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        String listTitle = (String) getGroup(listPosition);
-      //  String imgLoc = getImageLoc(listPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_group, null);
-        }
-        final CheckedTextView listTitleTextView = convertView
-                .findViewById(R.id.listTitle);
-//        final CheckBox c = convertView.findViewById(R.id.checkBox);
-//        c.setVisibility(View.INVISIBLE);
-
-//        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                c.setVisibility(View.VISIBLE);
-//
-//                return true;
-//            }
-//        });
-
-//        listTitleTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(listTitleTextView.isChecked()){
-//                    listTitleTextView.setChecked(false);
-//                }else listTitleTextView.setChecked(true);
-//            }
-//        });
-
-        ImageView imageView = convertView.findViewById(R.id.listImage);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.list_group, parent, false);
+        final CheckedTextView textView =  rowView.findViewById(R.id.listTitle);
+        textView.setText(expandableListTitle.get(position));
+        // change the icon for Windows and iPhone
+        ImageView imageView = rowView.findViewById(R.id.listImage);
         imageView.setImageResource(R.drawable.burger);
 
 
-
-//      listTitleTextView.setOnClickListener(new View.OnClickListener() {
-//          @Override
-//          public void onClick(View v) {
-//
-//              if(listTitleTextView.isChecked()){
-//                  listTitleTextView.setChecked(false);
-//              }else {
-//                  listTitleTextView.setChecked(true);
-//              }
-//          }
-//      });
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
-
-        return convertView;
-    }
-
-    public void showCheckBox() {
-        check.setVisibility(View.VISIBLE);
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+if (textView.isChecked()){
+textView.setChecked(false);
+}else textView.setChecked(true);
+            }
+        });
+        return rowView;
     }
 
     private String getImageLoc(int listPosition) {
         return this.expandableListDetail.get(listPosition).get(0);
     }
 
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
 
-    @Override
-    public boolean isChildSelectable(int listPosition, int expandedListPosition) {
-        return true;
-    }
+
 }
