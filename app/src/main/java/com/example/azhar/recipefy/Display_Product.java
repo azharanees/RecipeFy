@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -33,12 +34,19 @@ public class Display_Product extends AppCompatActivity {
         expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
 
+
+
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
+
                 Toast.makeText(getApplicationContext(),
                         expandableListTitle.get(groupPosition) + " List Expanded.",
                         Toast.LENGTH_SHORT).show();
+                checkedTextView = expandableListView.getChildAt(groupPosition).findViewById(R.id.listTitle);
+                if(checkedTextView.isChecked()){
+                    checkedTextView.setChecked(false);
+                }else checkedTextView.setChecked(true);
             }
         });
 
@@ -69,6 +77,9 @@ public class Display_Product extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
 
     }
 }

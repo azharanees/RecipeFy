@@ -93,12 +93,32 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
-        final TextView listTitleTextView = convertView
+        final CheckedTextView listTitleTextView = convertView
                 .findViewById(R.id.listTitle);
-//        ImageView imageView = convertView.findViewById(R.id.listImage);
-//        imageView.setImageResource(R.drawable.burger);
-        check = convertView.findViewById(R.id.checkBox);
-        check.setVisibility(View.GONE);
+//        final CheckBox c = convertView.findViewById(R.id.checkBox);
+//        c.setVisibility(View.INVISIBLE);
+
+//        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                c.setVisibility(View.VISIBLE);
+//
+//                return true;
+//            }
+//        });
+
+//        listTitleTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(listTitleTextView.isChecked()){
+//                    listTitleTextView.setChecked(false);
+//                }else listTitleTextView.setChecked(true);
+//            }
+//        });
+
+        ImageView imageView = convertView.findViewById(R.id.listImage);
+        imageView.setImageResource(R.drawable.burger);
+
 
 
 //      listTitleTextView.setOnClickListener(new View.OnClickListener() {
