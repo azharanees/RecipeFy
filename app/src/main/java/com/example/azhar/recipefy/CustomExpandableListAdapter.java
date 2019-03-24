@@ -1,26 +1,14 @@
 package com.example.azhar.recipefy;
 
 import android.content.Context;
-import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,12 +21,15 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
     private Context context;
     private List<String> expandableListTitle;
     private List<String> checked = new ArrayList<>();
+    private List<String> unchecked = new ArrayList<>();
     private Map<String, List<String>> expandableListDetail;
+    private String assosClass;
 
-    public CustomExpandableListAdapter(Context context, List<String> list) {
+    public CustomExpandableListAdapter(Context context, List<String> list, String assosClass) {
         super(context,-1,list);
         this.context = context;
         this.expandableListTitle = list;
+        this.assosClass = assosClass;
 
     }
 
@@ -49,10 +40,14 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
         View rowView = inflater.inflate(R.layout.list_group, parent, false);
         final CheckedTextView textView =  rowView.findViewById(R.id.listTitle);
         textView.setText(expandableListTitle.get(position));
+
         // change the icon for Windows and iPhone
         ImageView imageView = rowView.findViewById(R.id.listImage);
         imageView.setImageResource(R.drawable.burger);
 
+        if (assosClass.equalsIgnoreCase("avail")) {
+            textView.setChecked(true);
+        }
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +56,11 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
                 if (textView.isChecked()){
 textView.setChecked(false);
     checked.remove(name);
+                    unchecked.add(name);
 }else{
     textView.setChecked(true);
-    checked.add(name);
+                    checked.add(name);
+                    unchecked.remove(name);
 
 }
 
@@ -78,6 +75,10 @@ textView.setChecked(false);
 
     public void setChecked(List<String> checked) {
         this.checked = checked;
+    }
+
+    public List<String> getUnchecked() {
+        return unchecked;
     }
 
     private String getImageLoc(int listPosition) {

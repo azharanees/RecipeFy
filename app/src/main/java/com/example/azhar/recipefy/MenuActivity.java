@@ -1,8 +1,8 @@
 package com.example.azhar.recipefy;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class MenuActivity extends AppCompatActivity {
@@ -19,6 +19,11 @@ public class MenuActivity extends AppCompatActivity {
 
     public void displayProductActivity(View view) {
         Intent guessTheCountryIntent = new Intent(this,Display_Product.class);
+        startActivity(guessTheCountryIntent);
+    }
+
+    public void availabilityActivity(View view) {
+        Intent guessTheCountryIntent = new Intent(this, AvailableProducts.class);
         startActivity(guessTheCountryIntent);
     }
 }

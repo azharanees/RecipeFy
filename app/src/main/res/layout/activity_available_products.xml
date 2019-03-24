@@ -24,10 +24,11 @@
         tools:layout_constraintTop_creator="1">
 
         <LinearLayout
-            android:id="@+id/displayProd"
+            android:id="@+id/availActiv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            >
 
             <ListView
                 android:id="@+id/expandableListView"
@@ -38,8 +39,8 @@
                 android:id="@+id/addKitchenButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="addToKitchen"
-                android:text="Add to kitchen" />
+                android:onClick="removeFromKitchen"
+                android:text="Save" />
 
         </LinearLayout>
     </ScrollView>

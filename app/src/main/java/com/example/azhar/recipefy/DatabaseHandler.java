@@ -12,7 +12,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
 import java.util.List;
 
 /**
@@ -158,6 +157,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          db.update(TABLE_PRODUCTS,values,KEY_ID + " = ?",
                 new String[] { String.valueOf(product.getId()) });
         System.out.println("ID = " +String.valueOf(product.getId()));
+        System.out.println("AFTER MAKE KEK = " + getProduct(product.getId()).getAvail());
+    }
+
+    public void makeNotAvail(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_AVAIL, "NOT AVAILABLE");
+
+        db.update(TABLE_PRODUCTS, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(product.getId())});
+        System.out.println("ID = " + String.valueOf(product.getId()));
         System.out.println("AFTER MAKE KEK = " + getProduct(product.getId()).getAvail());
     }
 
