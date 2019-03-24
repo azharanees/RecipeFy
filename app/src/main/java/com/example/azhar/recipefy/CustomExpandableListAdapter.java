@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private List<String> expandableListTitle;
+    private List<String> checked = new ArrayList<>();
     private Map<String, List<String>> expandableListDetail;
 
     public CustomExpandableListAdapter(Context context, List<String> list) {
@@ -41,7 +43,7 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.list_group, parent, false);
@@ -55,12 +57,27 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-if (textView.isChecked()){
+                String name = expandableListTitle.get(position);
+                if (textView.isChecked()){
 textView.setChecked(false);
-}else textView.setChecked(true);
+    checked.remove(name);
+}else{
+    textView.setChecked(true);
+    checked.add(name);
+
+}
+
             }
         });
         return rowView;
+    }
+
+    public List<String> getChecked() {
+        return checked;
+    }
+
+    public void setChecked(List<String> checked) {
+        this.checked = checked;
     }
 
     private String getImageLoc(int listPosition) {

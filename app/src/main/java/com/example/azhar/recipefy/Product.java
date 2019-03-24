@@ -13,6 +13,15 @@ public class Product {
     private String description;
     private String name;
     private String imgLoc;
+    private String avail;
+
+    public String getAvail() {
+        return avail;
+    }
+
+    public void setAvail(String avail) {
+        this.avail = avail;
+    }
 
     public Product() {
     }
@@ -22,6 +31,7 @@ public class Product {
         this.weight = weight;
         this.description = description;
         this.name = name;
+        this.avail = "NOT AVAILABLE";
     }
 
     public int getId() {
@@ -66,7 +76,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "ID : "+getId()+"\nName : "+ getName() +"\nPrice : " + getPrice() + "\nWeight : "+ getWeight() + "\nDescription : "+ getDescription();
+        return "ID : "+getId()+"\nName : "+ getName() +"\nPrice : " + getPrice() + "\nWeight : "+ getWeight() + "\nDescription : "+ getDescription()+ "\nisAvail : "+ getAvail();
     }
 
     public String getImgLoc() {
