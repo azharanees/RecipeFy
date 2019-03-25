@@ -26,4 +26,12 @@ public class MenuActivity extends AppCompatActivity {
         Intent guessTheCountryIntent = new Intent(this, AvailableProducts.class);
         startActivity(guessTheCountryIntent);
     }
+
+
+    public void editProductActivity(View view) {
+        Intent intent = new Intent(this, EditProductList.class);
+        startActivity(intent);
+    }
+
+
 }

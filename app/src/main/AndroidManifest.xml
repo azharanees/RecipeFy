@@ -19,7 +19,10 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".Register_Product" />
         <activity android:name=".Display_Product" />
-        <activity android:name=".AvailableProducts"></activity>
+        <activity android:name=".AvailableProducts" />
+        <activity android:name=".EditProductList"></activity>
+        <activity android:name=".ProductDetailActivity"></activity>
+
     </application>
 
 </manifest>

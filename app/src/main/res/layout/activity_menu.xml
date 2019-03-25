@@ -27,6 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="117dp"
+        android:onClick="editProductActivity"
         android:text="Edit Product"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

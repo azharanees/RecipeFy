@@ -1,6 +1,7 @@
 package com.example.azhar.recipefy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,11 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
         this.context = context;
         this.expandableListTitle = list;
         this.assosClass = assosClass;
-
     }
 
+
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.list_group, parent, false);
@@ -66,6 +67,20 @@ textView.setChecked(false);
 
             }
         });
+
+        if (assosClass.equalsIgnoreCase("editProduct")) {
+            textView.setCheckMarkDrawable(null);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("product", expandableListTitle.get(position));
+                    System.out.println(expandableListTitle.get(position));
+                    context.startActivity(intent);
+
+                }
+            });
+        }
         return rowView;
     }
 

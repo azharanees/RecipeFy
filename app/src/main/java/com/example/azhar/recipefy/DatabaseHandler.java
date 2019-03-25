@@ -138,10 +138,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // code to update the single product
     public int updateProduct(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, product.getName());
-        values.put(KEY_PRICE, product.getId());
+        values.put(KEY_PRICE, String.valueOf(product.getPrice()));
+        values.put(KEY_AVAIL, product.getAvail());
+        values.put(KEY_WEIGHT, product.getWeight());
+        values.put(KEY_DESC, product.getDescription());
 
         // updating row
         return db.update(TABLE_PRODUCTS, values, KEY_ID + " = ?",
