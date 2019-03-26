@@ -34,7 +34,7 @@ public class Search extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                search();
             }
         });
 
@@ -42,6 +42,22 @@ public class Search extends AppCompatActivity {
     }
 
     public void search(View view) {
+        final DatabaseHandler db = new DatabaseHandler(this);
+        CustomExpandableListAdapter listAdapter;
+        List<String> titles = new ArrayList<>();
+        List<Product> productList = db.search(searchText.getText().toString());
+
+        for (Product p : productList) {
+            titles.add(p.getName());
+        }
+
+        listView = findViewById(R.id.expandableListView);
+        listAdapter = new CustomExpandableListAdapter(this, titles, "editProduct");
+        listView.setAdapter(listAdapter);
+
+    }
+
+    public void search() {
         final DatabaseHandler db = new DatabaseHandler(this);
         CustomExpandableListAdapter listAdapter;
         List<String> titles = new ArrayList<>();
