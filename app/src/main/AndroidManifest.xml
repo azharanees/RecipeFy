@@ -22,7 +22,7 @@
         <activity android:name=".AvailableProducts" />
         <activity android:name=".EditProductList" />
         <activity android:name=".ProductDetailActivity" />
-        <activity android:name=".search"></activity>
+        <activity android:name=".Search"></activity>
     </application>
 
 </manifest>

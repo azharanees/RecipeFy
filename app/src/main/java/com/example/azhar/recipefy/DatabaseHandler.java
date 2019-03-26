@@ -193,4 +193,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
+    public List<Product> search(String term) {
+        String searchQuery = "SELECT  * FROM " + TABLE_PRODUCTS + " WHERE " + KEY_NAME + " LIKE '%" + term + "%' OR " + KEY_DESC + " LIKE '%" + term + "%';";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        List<Product> searchedList = new ArrayList<>();
+        Cursor cursor = db.rawQuery(searchQuery, null);
+        System.out.println("Coming to the search Method");
+        if (cursor.moveToFirst()) {
+            do {
+
+                System.out.println("Going inside the loop");
+                Product product = new Product();
+                product.setId(Integer.parseInt(cursor.getString(0)));
+                product.setName(cursor.getString(1));
+                product.setPrice(BigDecimal.valueOf(cursor.getDouble(2)));
+                product.setWeight(cursor.getDouble(3));
+                product.setDescription(cursor.getString(4));
+                product.setAvail(cursor.getString(5));
+                System.out.println("PRODUCT ___>" + product);
+                // Adding contact to list
+                searchedList.add(product);
+            } while (cursor.moveToNext());
+
+            System.out.println("LI" + searchedList);
+        }
+
+
+        return searchedList;
+    }
+
+
 }

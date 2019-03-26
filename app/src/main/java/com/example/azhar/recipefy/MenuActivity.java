@@ -33,5 +33,12 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void searchActivity(View view) {
+        Intent intent = new Intent(this, Search.class);
+        startActivity(intent);
+    }
 
+
+    public void recipeActivity(View view) {
+    }
 }

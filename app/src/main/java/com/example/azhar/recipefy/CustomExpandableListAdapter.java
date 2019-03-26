@@ -80,6 +80,9 @@ textView.setChecked(false);
 
                 }
             });
+        } else if (assosClass.equalsIgnoreCase("search")) {
+            textView.setCheckMarkDrawable(null);
+
         }
         return rowView;
     }
