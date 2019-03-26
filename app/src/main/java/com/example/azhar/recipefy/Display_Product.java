@@ -31,7 +31,6 @@ public class Display_Product extends AppCompatActivity {
         expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, "display");
         expandableListView.setAdapter(expandableListAdapter);
         addToKitchen = findViewById(R.id.addKitchenButton);
-
     }
 
     public void addToKitchen(View view) {

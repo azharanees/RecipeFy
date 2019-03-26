@@ -20,9 +20,9 @@
         <activity android:name=".Register_Product" />
         <activity android:name=".Display_Product" />
         <activity android:name=".AvailableProducts" />
-        <activity android:name=".EditProductList"></activity>
-        <activity android:name=".ProductDetailActivity"></activity>
-
+        <activity android:name=".EditProductList" />
+        <activity android:name=".ProductDetailActivity" />
+        <activity android:name=".search"></activity>
     </application>
 
 </manifest>
