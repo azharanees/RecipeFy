@@ -33,6 +33,7 @@ public class Register_Product extends AppCompatActivity {
     public void addProduct(View view) {
 
         Product p = new Product(new BigDecimal(priceField.getText().toString()),Double.parseDouble(weightField.getText().toString()),descField.getText().toString(),nameField.getText().toString());
+        p.setAvail("NOT AVAILABLE");
         System.out.println(p);
         mydb.addProduct(p);
         List<Product> list = mydb.getAllProducts();

@@ -18,7 +18,12 @@
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".Register_Product" />
-        <activity android:name=".Display_Product"></activity>
+        <activity android:name=".Display_Product" />
+        <activity android:name=".AvailableProducts" />
+        <activity android:name=".EditProductList" />
+        <activity android:name=".ProductDetailActivity" />
+        <activity android:name=".Search" />
+        <activity android:name=".RecipeActivity"></activity>
     </application>
 
 </manifest>

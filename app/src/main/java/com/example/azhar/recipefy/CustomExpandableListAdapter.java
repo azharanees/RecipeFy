@@ -1,19 +1,15 @@
 package com.example.azhar.recipefy;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
-import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,118 +17,92 @@ import java.util.Map;
  * Created by Azhar on 3/23/2019.
  */
 
-public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
+public class CustomExpandableListAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private List<String> expandableListTitle;
+    private List<String> checked = new ArrayList<>();
+    private List<String> unchecked = new ArrayList<>();
     private Map<String, List<String>> expandableListDetail;
+    private String assosClass;
 
-    public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       Map<String, List<String>> expandableListDetail) {
+    public CustomExpandableListAdapter(Context context, List<String> list, String assosClass) {
+        super(context,-1,list);
         this.context = context;
-        this.expandableListTitle = expandableListTitle;
-        this.expandableListDetail = expandableListDetail;
-
+        this.expandableListTitle = list;
+        this.assosClass = assosClass;
     }
 
-    @Override
-    public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
-    }
 
     @Override
-    public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
-    }
+    public View getView(final int position, final View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.list_group, parent, false);
+        final CheckedTextView textView =  rowView.findViewById(R.id.listTitle);
+        textView.setText(expandableListTitle.get(position));
 
-    @Override
-    public View getChildView(int listPosition, final int expandedListPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item, null);
+        // change the icon for Windows and iPhone
+        ImageView imageView = rowView.findViewById(R.id.listImage);
+        imageView.setImageResource(R.drawable.burger);
+
+        if (assosClass.equalsIgnoreCase("avail")) {
+            textView.setChecked(true);
         }
-        TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.expandedListItem);
-        expandedListTextView.setText(expandedListText);
-        return convertView;
-    }
 
-    @Override
-    public int getChildrenCount(int listPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .size();
-    }
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = expandableListTitle.get(position);
+                if (textView.isChecked()){
+textView.setChecked(false);
+    checked.remove(name);
+                    unchecked.add(name);
+}else{
+    textView.setChecked(true);
+                    checked.add(name);
+                    unchecked.remove(name);
 
-    @Override
-    public Object getGroup(int listPosition) {
-        return this.expandableListTitle.get(listPosition);
-    }
+}
 
-    @Override
-    public int getGroupCount() {
-        return this.expandableListTitle.size();
-    }
+            }
+        });
 
-    @Override
-    public long getGroupId(int listPosition) {
-        return listPosition;
-    }
-    CheckBox check;
+        if (assosClass.equalsIgnoreCase("editProduct")) {
+            textView.setCheckMarkDrawable(null);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("product", expandableListTitle.get(position));
+                    System.out.println(expandableListTitle.get(position));
+                    context.startActivity(intent);
 
-    @Override
-    public View getGroupView(int listPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        String listTitle = (String) getGroup(listPosition);
-      //  String imgLoc = getImageLoc(listPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_group, null);
+                }
+            });
+        } else if (assosClass.equalsIgnoreCase("search")) {
+            textView.setCheckMarkDrawable(null);
+
         }
-        final TextView listTitleTextView = convertView
-                .findViewById(R.id.listTitle);
-//        ImageView imageView = convertView.findViewById(R.id.listImage);
-//        imageView.setImageResource(R.drawable.burger);
-        check = convertView.findViewById(R.id.checkBox);
-        check.setVisibility(View.GONE);
-
-
-//      listTitleTextView.setOnClickListener(new View.OnClickListener() {
-//          @Override
-//          public void onClick(View v) {
-//
-//              if(listTitleTextView.isChecked()){
-//                  listTitleTextView.setChecked(false);
-//              }else {
-//                  listTitleTextView.setChecked(true);
-//              }
-//          }
-//      });
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
-
-        return convertView;
+        return rowView;
     }
 
-    public void showCheckBox() {
-        check.setVisibility(View.VISIBLE);
+    public List<String> getChecked() {
+        return checked;
+    }
+
+    public void setChecked(List<String> checked) {
+        this.checked = checked;
+    }
+
+    public List<String> getUnchecked() {
+        return unchecked;
     }
 
     private String getImageLoc(int listPosition) {
         return this.expandableListDetail.get(listPosition).get(0);
     }
 
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
 
-    @Override
-    public boolean isChildSelectable(int listPosition, int expandedListPosition) {
-        return true;
-    }
+
 }

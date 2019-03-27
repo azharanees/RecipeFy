@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.azhar.recipefy.Display_Product">
+    tools:context="com.example.azhar.recipefy.EditProductList">
 
     <ScrollView
         android:layout_width="0dp"
@@ -32,14 +32,7 @@
             <ListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
-                android:layout_height="529dp" />
-
-            <Button
-                android:id="@+id/addKitchenButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="addToKitchen"
-                android:text="Add to kitchen" />
+                android:layout_height="503dp" />
 
         </LinearLayout>
     </ScrollView>
