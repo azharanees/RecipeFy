@@ -40,7 +40,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
     public void recipeActivity(View view) {
-        Intent intent = new Intent(this, Search.class);
+        Intent intent = new Intent(this, RecipeActivity.class);
         startActivity(intent);
     }
 }
