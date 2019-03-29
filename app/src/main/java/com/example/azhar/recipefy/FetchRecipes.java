@@ -33,29 +33,34 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray itemsArray = jsonObject.getJSONArray("recipes");
-            int i = 0;
+            int i = 1;
             String title = null;
             String authors = null;
             while (i < itemsArray.length() &&
                     (authors == null && title == null)) {
                 // Get the current item information.
                 JSONObject book = itemsArray.getJSONObject(i);
-                JSONObject volumeInfo = book.getJSONObject("volumeInfo");
 
+                String volumeInfo = book.get("title").toString();
+                //authors = volumeInfo.getString("authors");
+                if (volumeInfo != null) {
+                    System.out.println(volumeInfo);
+
+
+                    //   System.out.println(title);
+                    //  listView.setText(title);
+
+                } else {
+//                        mTitleText.get().setText(R.string.no_results);
+//                        mAuthorText.get().setText("");
+                    System.out.println("NO RESULtS");
+                }
+                //  System.out.println("-->"+volumeInfo);
                 // Try to get the author and title from the current item,
                 // catch if either field is empty and move on.
                 try {
-                    title = volumeInfo.getString("title");
-                    authors = volumeInfo.getString("authors");
-                    if (title != null && authors != null) {
-                        System.out.println(title);
-                        //  listView.setText(title);
+                    // title = volumeInfo.getString("title");
 
-                    } else {
-//                        mTitleText.get().setText(R.string.no_results);
-//                        mAuthorText.get().setText("");
-                        System.out.println("NO RESULtS");
-                    }
                 } catch (Exception e) {
                     // If onPostExecute does not receive a proper JSON string,
                     // update the UI to show failed results.

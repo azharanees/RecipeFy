@@ -20,6 +20,7 @@ public class RecipeLoader extends AsyncTaskLoader<String> {
     RecipeLoader(Context context, String queryString) {
         super(context);
         mQueryString = queryString;
+        System.out.println(mQueryString + " at RecipeLoader 22");
     }
 
     @Nullable

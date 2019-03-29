@@ -15,7 +15,7 @@ import java.net.URL;
  */
 
 public class APIConnector {
-    private final static String API_KEY = "0023b6accc1cda3fc464db16c41fbb02";
+    private final static String API_KEY = "138529d26d114309e9515af828bd3890";
 
     private static final String BOOK_BASE_URL = "https://www.food2fork.com/api/search?key=" + API_KEY;
     // Parameter for the search string.
@@ -31,6 +31,7 @@ public class APIConnector {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String bookJSONString = null;
+        System.out.println("API CON 34 = " + queryString);
 
 
         try {

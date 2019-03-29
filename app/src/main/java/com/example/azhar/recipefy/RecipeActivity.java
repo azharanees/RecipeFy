@@ -33,6 +33,8 @@ public class RecipeActivity extends AppCompatActivity implements LoaderManager.L
     DatabaseHandler db;
     CheckedTextView checkedTextView;
     Button addToKitchen;
+    String recipeString = "";
+    String apiCallString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class RecipeActivity extends AppCompatActivity implements LoaderManager.L
     public void findRecipeButton(View view) {
         System.out.println(expandableListAdapter.getChecked());
         List<String> recipes = expandableListAdapter.getChecked();
-        String recipeString = "";
+        recipeString = "";
         for (String product : recipes) {
             recipeString = recipeString.concat(product + ",");
         }
@@ -69,15 +71,15 @@ public class RecipeActivity extends AppCompatActivity implements LoaderManager.L
 
         System.out.println(expandableListAdapter.getChecked());
         List<String> recipes = expandableListAdapter.getChecked();
-        String recipeString = "";
+        recipeString = "";
         for (String product : recipes) {
             recipeString = recipeString.concat(product + ",");
         }
 
 
-        String apiCallString = "https://www.food2fork.com/api/search?key=" + API_KEY + "&q=" + recipeString + "page=1";
+        apiCallString = "https://www.food2fork.com/api/search?key=" + API_KEY + "&q=" + recipeString + "page=1";
 
-        String queryString = apiCallString;
+        String queryString = recipeString;
 
         InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -112,16 +114,14 @@ public class RecipeActivity extends AppCompatActivity implements LoaderManager.L
 //                mTitleText.setText(R.string.no_network);
             }
         }
+        recipeString = "";
     }
 
     @NonNull
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
-        String queryString = "";
-
-        if (args != null) {
-            queryString = args.getString("queryString");
-        }
+        String queryString = "HOTDOG";
+        System.out.println(apiCallString);
 
         return new RecipeLoader(this, queryString);
     }
