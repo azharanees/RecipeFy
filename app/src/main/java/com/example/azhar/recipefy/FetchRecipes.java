@@ -1,5 +1,7 @@
 package com.example.azhar.recipefy;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.ListView;
 
@@ -17,21 +19,26 @@ import java.util.List;
 public class FetchRecipes extends AsyncTask<String, String, String> {
 
     static List<String> recipeListTitle;
+    static List<Recipe> recipes;
     ListView listView;
     String recipeList;
+    Context context;
 
 
-
-    FetchRecipes(String recipeList, ListView listView) {
+    FetchRecipes(String recipeList, ListView listView, Context context) {
         this.listView = listView;
         this.recipeList = recipeList;
+        this.context = context.getApplicationContext();
+
     }
 
+    public static List<Recipe> getRecipes() {
+        return recipes;
+    }
 
     public static List<String> getFetchedRecipes() {
-        List<String> finalList = recipeListTitle;
         //recipeListTitle.clear();
-        return finalList;
+        return recipeListTitle;
     }
 
     protected String doInBackground(String... params) {
@@ -51,15 +58,20 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
             String title = null;
             String authors = null;
             recipeListTitle = new ArrayList<>();
+            recipes = new ArrayList<>();
             while (i < itemsArray.length() &&
                     (authors == null && title == null)) {
                 // Get the current item information.
                 JSONObject book = itemsArray.getJSONObject(i);
 
                 String volumeInfo = book.get("title").toString();
+                String url = book.get("source_url").toString();
+                String img = book.get("image_url").toString();
                 //authors = volumeInfo.getString("authors");
                 if (volumeInfo != null) {
-                    System.out.println(volumeInfo);
+                    System.out.println(url);
+                    Recipe recipe = new Recipe(volumeInfo, url, img);
+                    recipes.add(recipe);
                     recipeListTitle.add(volumeInfo);
 
 
@@ -89,6 +101,8 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
 
             }
 
+            context.startActivity(new Intent(context, FetchedView.class));
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -96,4 +110,6 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
 
 
     }
+
+
 }

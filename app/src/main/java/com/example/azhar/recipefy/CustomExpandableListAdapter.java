@@ -2,6 +2,7 @@ package com.example.azhar.recipefy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,11 @@ public class CustomExpandableListAdapter extends ArrayAdapter<String> {
 textView.setChecked(false);
     checked.remove(name);
                     unchecked.add(name);
-}else{
+                } else if (assosClass.equalsIgnoreCase("recipes")) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                    context.startActivity(browserIntent);
+
+                } else {
     textView.setChecked(true);
                     checked.add(name);
                     unchecked.remove(name);

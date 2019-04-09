@@ -94,7 +94,7 @@ public class RecipeActivity extends AppCompatActivity {
             queryBundle.putString("queryString", queryString);
             //getSupportLoaderManager().restartLoader(0, queryBundle, this);
 
-            new FetchRecipes(queryString, expandableListView).execute(queryString);
+            new FetchRecipes(queryString, expandableListView, this.getApplicationContext()).execute(queryString);
 //            mAuthorText.setText("");
 //            mTitleText.setText(R.string.loading);
         } else {
