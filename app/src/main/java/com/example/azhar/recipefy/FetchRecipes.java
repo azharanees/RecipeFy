@@ -7,14 +7,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Azhar on 3/29/2019.
  */
 
 public class FetchRecipes extends AsyncTask<String, String, String> {
 
+    static List<String> recipeListTitle;
     ListView listView;
     String recipeList;
+
 
 
     FetchRecipes(String recipeList, ListView listView) {
@@ -22,10 +27,18 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
         this.recipeList = recipeList;
     }
 
+
+    public static List<String> getFetchedRecipes() {
+        List<String> finalList = recipeListTitle;
+        //recipeListTitle.clear();
+        return finalList;
+    }
+
     protected String doInBackground(String... params) {
 
         return APIConnector.getRecipes(params[0]);
     }
+
 
     @Override
     protected void onPostExecute(String s) {
@@ -33,9 +46,11 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray itemsArray = jsonObject.getJSONArray("recipes");
+            //  recipeListTitle = new ArrayList<>();
             int i = 1;
             String title = null;
             String authors = null;
+            recipeListTitle = new ArrayList<>();
             while (i < itemsArray.length() &&
                     (authors == null && title == null)) {
                 // Get the current item information.
@@ -45,11 +60,10 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
                 //authors = volumeInfo.getString("authors");
                 if (volumeInfo != null) {
                     System.out.println(volumeInfo);
+                    recipeListTitle.add(volumeInfo);
 
 
                     //   System.out.println(title);
-                    //  listView.setText(title);
-
                 } else {
 //                        mTitleText.get().setText(R.string.no_results);
 //                        mAuthorText.get().setText("");
@@ -62,6 +76,7 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
                     // title = volumeInfo.getString("title");
 
                 } catch (Exception e) {
+                    //TODO : Handle no results from API
                     // If onPostExecute does not receive a proper JSON string,
                     // update the UI to show failed results.
 //                    mTitleText.get().setText(R.string.no_results);
@@ -74,8 +89,11 @@ public class FetchRecipes extends AsyncTask<String, String, String> {
 
             }
 
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
     }
 }
